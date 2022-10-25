@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if request.user.is_authenticated %}
+
+    <h1>Logged In</h1>
+    <p>Your user id: {{request.user.id}}</p>
+    <p>Your user id/email: {{request.user.email}}</p>
+    <p>Your user was created at: {{request.user.insertInstant}}</p>
+    <p>Your user was updated at: {{request.user.lastUpdateInstant}}</p>
+    <p>You last logged in at: {{request.user.lastLoginInstant}}</p>
+    <p>Your password was last updated at: {{request.user.passwordLastUpdateInstant}}</p>
+    <p>Password change required: {{request.user.passwordChangeRequired}}</p>
+    <div>
+     <button type="submit" id="logout_button">Logout</button>
+    </div>
+
+    <script type="text/javascript">
+      document.getElementById("logout_button").onclick = function () {
+        location.href = "{{ url_for('logout') }}";
+      };
+    </script>
+{% else %}
+
+    <h1 style="color: blue;">Login</h1>
+    <table>
+      <tr>
+        <td>
+          <div>
+            <button type="submit" id="login_button">Login</button>
+          </div>
+	</td>
+	<td>
+          <div>
+            <button type="submit" id="register_button">Register</button>
+	  </div>
+	</td>
+      </tr>
+    </table>
+
+    <script type="text/javascript">
+      document.getElementById("login_button").onclick = function () {
+          location.href = "{{ url_for('login') }}";
+      };
+      document.getElementById("register_button").onclick = function () {
+	      location.href = "{{ url_for('register') }}";
+      };
+    </script>
+{% endif %}
+
+{% endblock %}
